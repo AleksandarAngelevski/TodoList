@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net10.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>aspnet-Web-b8d835f8-4b90-45d5-b7a3-dd83d0467d19</UserSecretsId>
+        <RootNamespace>Web</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.5"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TodoList.Domain\TodoList.Domain.csproj" />
+      <ProjectReference Include="..\TodoList.Repository\TodoList.Repository.csproj" />
+      <ProjectReference Include="..\TodoList.Service\TodoList.Service.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Views\Account\Login.cshtml" />
+      <AdditionalFiles Include="Views\Home\Error.cshtml" />
+    </ItemGroup>
+
+</Project>

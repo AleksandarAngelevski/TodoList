@@ -1,0 +1,40 @@
+@model RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_Layout";
+}
+
+<div class="form-container">
+    <form asp-action="Register" method="post">
+        <div asp-validation-summary="ModelOnly"></div> 
+        <div>
+            <label asp-for="UserName"></label>
+            <input asp-for="UserName"></input> 
+            <span asp-validation-for="UserName"></span>
+        </div>
+        <div>
+            <label asp-for="FullName"></label>
+            <input asp-for="FullName"></input>
+            <span asp-validation-for="FullName"></span>
+            
+        </div>
+        <div>
+            <label asp-for="Password" ></label>
+            <input asp-for="Password"></input>
+            <span asp-validation-for="Password"></span>
+        </div>
+        <div>
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword"></input>
+            <span asp-validation-for="ConfirmPassword"></span>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+</div>
+
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

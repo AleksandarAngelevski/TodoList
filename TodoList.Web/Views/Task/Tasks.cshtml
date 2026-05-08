@@ -1,0 +1,35 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model IEnumerable<Web.Response.TaskResponse>
+
+@{
+    ViewData["Title"] = "My Tasks";
+    Layout = "_Layout";
+}
+@section Styles{
+    <link rel="stylesheet" href="~/css/tasks.css"/>
+}
+<div class="wrapper">
+    <h2>My Tasks</h2>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Finished</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Name</td>
+                <td>@task.Description</td>
+                <td>@task.Finished</td>
+                <td><a asp-controller="Task" asp-route-id="@task.Id" asp-action="EditTask">Edit</a></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <a asp-controller="Task" asp-action="CreateTask">Create Task</a>
+</div>

@@ -1,0 +1,28 @@
+@model Web.Response.TaskResponse;
+
+@{
+    ViewData["Title"] = "Task";
+    Layout = "_Layout";
+}
+
+<form asp-controller="Task" asp-action="EditTask" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name"></input>
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description" ></input>
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div>
+        <label asp-for="Finished"></label>
+        <input asp-for="Finished" type="checkbox" />
+        <span asp-validation-for="Finished"></span>
+    </div>
+    
+    <button type="submit">Edit</button> 
+</form>

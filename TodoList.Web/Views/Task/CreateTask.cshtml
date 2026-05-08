@@ -1,0 +1,29 @@
+@model Web.Request.CreateTaskRequest
+@{
+    ViewData["Title"] = "Create task";
+    Layout = "_Layout";
+}
+
+<h2>Create task</h2>
+
+<form asp-controller="Task" asp-action="CreateTaskAsync" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    
+    <div>
+        <label asp-for="Name"></label>
+        <input asp-for="Name"></input>
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label asp-for="Description"></label>
+        <input asp-for="Description"></input>
+        <span asp-validation-for="Description"></span>
+    </div>
+    
+    <button type="submit">Create</button>
+</form>
+
+@section Scripts
+{
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
