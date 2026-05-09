@@ -1,6 +1,9 @@
+using System.Collections;
+using System.Linq.Expressions;
 using Domain.Models;
 using Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Repository.Data;
 
 namespace Repository.Repositories;
@@ -48,5 +51,32 @@ public class BaseRepository<T> :  IRepository<T> where T : BaseEntity
          _dbSet.Remove(entity);
          await _context.SaveChangesAsync();
       }
+   }
+
+
+   public async Task<IEnumerable<E>> GetAllAsync<E>(Expression<Func<T, E>> selector, 
+      Expression<Func<T, bool>>? predicate = null, 
+      Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, 
+      Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
+   {
+      IQueryable<T> query = _dbSet;
+      
+      
+      if (include != null)
+      {
+         query = include(query);
+      }
+
+      if (predicate != null)
+      {
+         query = query.Where(predicate);
+      }
+
+      if (orderBy != null)
+      {
+         orderBy(query);
+      }
+
+      return await query.Select(selector).ToListAsync();
    }
 }

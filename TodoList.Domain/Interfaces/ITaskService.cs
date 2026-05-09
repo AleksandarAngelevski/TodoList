@@ -11,4 +11,5 @@ public interface ITaskService
    Task<Domain.Models.Task> GetByIdAsync(Guid taskId);
    Task<Domain.Models.Task> UpdateAsync(Guid taskId, TaskDto dto);
 
+   Task<List<Domain.Models.Task>> GetAllWithoutAuditColumns();
 }

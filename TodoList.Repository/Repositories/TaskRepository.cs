@@ -14,4 +14,9 @@ public class TaskRepository : BaseRepository<Domain.Models.Task> , ITaskReposito
    {
        return await _context.Tasks.Where(t => t.UserId == userId).ToListAsync();
    }
+
+   public async Task<IEnumerable<Domain.Models.Task>> GetAllWithEmptyAudits()
+   {
+       return await GetAllAsync<Domain.Models.Task>(selector: x => x, predicate: x => x.CreatedById == null || x.DateCreated == null);
+   }
 }

@@ -37,14 +37,13 @@ public class AuditInterceptor : SaveChangesInterceptor
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        Console.Write("_%Q%%%%%%%%%%%%%%%%%%%%%%%%%%%"); 
         var context = eventData.Context;
         var entries = context.ChangeTracker.Entries<BaseAuditableEntity<ApplicationUser>>();
 
         foreach (var entry in entries)
         {
             var now = DateTime.UtcNow;
-            var user = _currentUser.GetUserId() ?? "system";
+            var user = _currentUser.GetUserId() ?? entry.Entity.CreatedById;
 
             if (entry.State == EntityState.Added)
             {

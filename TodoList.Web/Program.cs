@@ -7,6 +7,7 @@ using Repository.Repositories;
 using Service.Services;
 using Repository.Data;
 using Service.Interfaces;
+using Service.Jobs;
 using Web.Interceptor;
 using Web.Mapper;
 
@@ -36,6 +37,10 @@ builder.Services.AddHttpContextAccessor();
 // Register the AuditInterceptor service
 builder.Services.AddScoped<AuditInterceptor>();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+
+// Register Background Services
+builder.Services.AddHostedService<AuditFieldsBackgroundService>();
+
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>

@@ -49,5 +49,12 @@ public class TaskService: ITaskService
 
         return await _taskRepository.UpdateAsync(result);
     }
- 
+
+
+    public async Task<List<Task>> GetAllWithoutAuditColumns()
+    {
+        var tasks = await _taskRepository.GetAllWithEmptyAudits();
+        
+        return tasks.ToList();
+    }
 }
