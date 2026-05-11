@@ -1,6 +1,8 @@
 using Domain.Interfaces;
 using Domain.Dtos;
+using Repository.HttpClient;
 using Repository.Interfaces;
+using Service.Interfaces;
 using Task = Domain.Models.Task;
 
 namespace Service.Services;
@@ -8,10 +10,11 @@ namespace Service.Services;
 public class TaskService: ITaskService
 {
     private ITaskRepository _taskRepository;
-
-    public TaskService(ITaskRepository taskRepository)
+    private ICatFactsApiClient _catFactsApiClient;
+    public TaskService(ITaskRepository taskRepository, ICatFactsApiClient catFactsApiClient)
     {
         _taskRepository = taskRepository;
+        _catFactsApiClient = catFactsApiClient;
     }
 
 

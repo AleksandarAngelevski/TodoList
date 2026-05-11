@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Repository.Interfaces;
+using Service.Interfaces;
 using Web.ViewModels;
 namespace Web.Controllers;
 public class TaskController : Controller
 {
     private ITaskRepository _taskRepository;
     private readonly TaskMapper _taskMapper;
-    public TaskController(ITaskRepository taskRepository, TaskMapper taskMapper)
+    private readonly ICatFactsApiClient _catFactsApiClient;
+    public TaskController(ITaskRepository taskRepository, TaskMapper taskMapper, ICatFactsApiClient catFactsApiClient)
     {
         _taskRepository = taskRepository;
         _taskMapper = taskMapper;
+        _catFactsApiClient = catFactsApiClient;
     }
 
 
@@ -58,7 +61,13 @@ public class TaskController : Controller
         if (userId == null)
             return Unauthorized();
         var tasks = await _taskMapper.GetAllByUserIdAsync(userId);
-        return View("Tasks",tasks);
+        var catFact = await _catFactsApiClient.GetCatFact();
+        var model = new TaskViewModel
+        {
+            Tasks = tasks,
+            CatFact = catFact.Fact,
+        };
+        return View("Tasks",model);
     }
 
 

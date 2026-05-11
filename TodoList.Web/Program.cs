@@ -2,10 +2,13 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Repository.Interfaces;
 using Repository.Repositories;
 using Service.Services;
 using Repository.Data;
+using Repository.HttpClient;
+using Service.ApiSettings;
 using Service.Interfaces;
 using Service.Jobs;
 using Web.Interceptor;
@@ -37,6 +40,19 @@ builder.Services.AddHttpContextAccessor();
 // Register the AuditInterceptor service
 builder.Services.AddScoped<AuditInterceptor>();
 builder.Services.AddScoped<ICurrentUser, CurrentUser>();
+
+// Api settings 
+builder.Services.Configure <CatFactsApiSettings>(
+    builder.Configuration.GetSection("CatFactsApi")
+    );
+builder.Services.AddHttpClient<ICatFactsApiClient,CatFactsApiClient>((sp, client) =>
+{
+    var settings = sp.GetRequiredService<IOptions<CatFactsApiSettings>>().Value;
+    client.BaseAddress = new Uri(settings.BaseUrl);
+    client.Timeout = TimeSpan.FromSeconds(settings.TimeoutSeconds);
+
+
+});
 
 // Register Background Services
 builder.Services.AddHostedService<AuditFieldsBackgroundService>();

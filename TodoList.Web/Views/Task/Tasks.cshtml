@@ -1,5 +1,5 @@
 @using Microsoft.EntityFrameworkCore.Metadata.Internal
-@model IEnumerable<Web.Response.TaskResponse>
+@model Web.ViewModels.TaskViewModel
 
 @{
     ViewData["Title"] = "My Tasks";
@@ -10,7 +10,7 @@
 }
 <div class="wrapper">
     <h2>My Tasks</h2>
-
+    <h3> @Model.CatFact</h3>
     <table>
         <thead>
         <tr>
@@ -20,7 +20,7 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var task in Model)
+        @foreach (var task in Model.Tasks)
         {
             <tr>
                 <td>@task.Name</td>
